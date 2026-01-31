@@ -17,7 +17,7 @@ func (s *CategoryService) GetAll() ([]model.Category, error) {
 	return s.repo.GetAll()
 }
 
-func (s *CategoryService) GetByID(id int) (*model.Category, error) {
+func (s *CategoryService) GetByID(id int64) (*model.Category, error) {
 	return s.repo.GetByID(id)
 }
 
@@ -25,10 +25,10 @@ func (s *CategoryService) Create(category *model.Category) (*model.Category, err
 	return s.repo.Create(category)
 }
 
-func (s *CategoryService) Update(id int, category *model.Category) error {
+func (s *CategoryService) Update(id int64, category *model.Category) error {
 	return s.repo.Update(id, category)
 }
 
-func (s *CategoryService) Delete(id int) error {
+func (s *CategoryService) Delete(id int64) error {
 	return s.repo.Delete(id)
 }

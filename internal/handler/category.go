@@ -34,7 +34,7 @@ func (h *CategoryHandler) GetAll(c *gin.Context) {
 }
 
 func (h *CategoryHandler) GetByID(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.Response{
 			Message: "invalid id",
@@ -81,7 +81,7 @@ func (h *CategoryHandler) Create(c *gin.Context) {
 }
 
 func (h *CategoryHandler) Update(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.Response{
 			Message: "invalid id",
@@ -114,7 +114,7 @@ func (h *CategoryHandler) Update(c *gin.Context) {
 }
 
 func (h *CategoryHandler) Delete(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.Response{
 			Message: "invalid id",

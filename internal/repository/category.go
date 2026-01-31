@@ -35,7 +35,7 @@ func (r *CategoryRepository) GetAll() ([]model.Category, error) {
 	return categories, nil
 }
 
-func (r *CategoryRepository) GetByID(id int) (*model.Category, error) {
+func (r *CategoryRepository) GetByID(id int64) (*model.Category, error) {
 	query := `SELECT id, name, description
 				FROM categories
 				WHERE id = $1`
@@ -62,7 +62,7 @@ func (r *CategoryRepository) Create(category *model.Category) (*model.Category, 
 	return category, nil
 }
 
-func (r *CategoryRepository) Update(id int, category *model.Category) error {
+func (r *CategoryRepository) Update(id int64, category *model.Category) error {
 	query := `UPDATE categories
 				SET name = $1, description = $2
 				WHERE id = $3`
@@ -84,7 +84,7 @@ func (r *CategoryRepository) Update(id int, category *model.Category) error {
 	return nil
 }
 
-func (r *CategoryRepository) Delete(id int) error {
+func (r *CategoryRepository) Delete(id int64) error {
 	query := `DELETE FROM categories
 				WHERE id = $1`
 
