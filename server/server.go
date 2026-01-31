@@ -13,7 +13,7 @@ func Start() {
 
 	db, err := database.InitDB(config.DBConn)
 	if err != nil {
-		log.Printf("error connecting to database, got %v", err)
+		log.Fatalf("error connecting to database, got %v", err)
 	}
 	defer db.Close()
 
