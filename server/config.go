@@ -17,22 +17,20 @@ type Config struct {
 func LoadConfig() *Config {
 	// viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
 	var config Config
 	bindSystemEnv(config)
 
 	if _, err := os.Stat(".env"); err == nil {
 		viper.SetConfigFile(".env")
-		_ = viper.ReadInConfig()
+		if err = viper.ReadInConfig(); err != nil {
+			log.Println("error reading config file, using system env", err)
+		}
 	}
 
 	if err := viper.Unmarshal(&config); err != nil {
 		log.Fatalf("unable to load config: %v", err)
 	}
-
-	// config := Config{
-	// 	DBConn:     viper.GetString("DB_CONN"),
-	// 	ServerPort: viper.GetString("SERVER_PORT"),
-	// }
 
 	return &config
 }
