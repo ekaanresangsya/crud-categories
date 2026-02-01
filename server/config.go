@@ -15,13 +15,13 @@ type Config struct {
 }
 
 func LoadConfig() *Config {
-	// viper.AutomaticEnv()
+	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	var config Config
-	bindSystemEnv(config)
-	fmt.Println("config setelah bind system env")
-	fmt.Println(config)
+	// bindSystemEnv(config)
+	// fmt.Println("config setelah bind system env")
+	// fmt.Println(config)
 
 	if _, err := os.Stat(".env"); err == nil {
 		viper.SetConfigFile(".env")
@@ -39,7 +39,7 @@ func LoadConfig() *Config {
 	return &config
 }
 
-func bindSystemEnv(iface interface{}, parts ...string) {
+func bindSystemEnv(iface any, parts ...string) {
 	ifv := reflect.ValueOf(iface)
 	ift := reflect.TypeOf(iface)
 	for i := 0; i < ift.NumField(); i++ {
