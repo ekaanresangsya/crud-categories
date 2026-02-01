@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log"
 	"os"
 	"strings"
 
@@ -21,15 +22,15 @@ func LoadConfig() *Config {
 		_ = viper.ReadInConfig()
 	}
 
-	// var config Config
-	// if err := viper.Unmarshal(&config); err != nil {
-	// 	log.Fatalf("unable to load config: %v", err)
-	// }
-
-	config := Config{
-		DBConn:     viper.GetString("DB_CONN"),
-		ServerPort: viper.GetString("SERVER_PORT"),
+	var config Config
+	if err := viper.Unmarshal(&config); err != nil {
+		log.Fatalf("unable to load config: %v", err)
 	}
+
+	// config := Config{
+	// 	DBConn:     viper.GetString("DB_CONN"),
+	// 	ServerPort: viper.GetString("SERVER_PORT"),
+	// }
 
 	return &config
 }
