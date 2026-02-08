@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"kasir-api/internal/database"
 	"log"
+	"time"
 )
 
 func Start() {
 	log.Print("Starting server ...")
+
+	fmt.Println(time.Now())
 
 	config := LoadConfig()
 

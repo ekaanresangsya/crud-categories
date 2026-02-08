@@ -36,3 +36,29 @@ func (h *TransactionHandler) Checkout(c *gin.Context) {
 
 	c.JSON(http.StatusOK, resData)
 }
+
+func (h *TransactionHandler) GetReportToday(c *gin.Context) {
+	report, err := h.transactionService.GetReportToday()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, model.Response{Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, report)
+}
+
+func (h *TransactionHandler) GetReport(c *gin.Context) {
+	var req model.ReportReq
+	if err := c.ShouldBindQuery(&req); err != nil {
+		c.JSON(http.StatusBadRequest, model.Response{Message: err.Error()})
+		return
+	}
+
+	report, err := h.transactionService.GetReport(req.StartDate, req.EndDate)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, model.Response{Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, report)
+}

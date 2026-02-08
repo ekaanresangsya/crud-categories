@@ -47,6 +47,8 @@ func InitRouter(db *sql.DB) *gin.Engine {
 	api := router.Group("/api")
 	{
 		api.POST("/checkout", transactionHandler.Checkout)
+		api.GET("report/hari-ini", transactionHandler.GetReportToday)
+		api.GET("report", transactionHandler.GetReport)
 	}
 
 	router.GET("/health", func(c *gin.Context) {

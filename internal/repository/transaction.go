@@ -79,13 +79,13 @@ func (r *TransactionRepository) CreateTransaction(req model.CheckoutRequest) (*m
 	}
 
 	var transactionID int
-	var createdAt time.Time
+	createdAt := time.Now()
 	// insert transaction
-	queryInsert := `INSERT INTO transactions (total_amount)
-				VALUES ($1)
-				RETURNING id, created_at`
-	err = tx.QueryRow(queryInsert, totalAmount).
-		Scan(&transactionID, &createdAt)
+	queryInsert := `INSERT INTO transactions (total_amount, created_at)
+				VALUES ($1, $2)
+				RETURNING id`
+	err = tx.QueryRow(queryInsert, totalAmount, createdAt).
+		Scan(&transactionID)
 	if err != nil {
 		log.Printf("error insert transaction: %v", err)
 		return nil, err
@@ -121,4 +121,44 @@ func (r *TransactionRepository) CreateTransaction(req model.CheckoutRequest) (*m
 		CreatedAt:   createdAt,
 		Details:     details,
 	}, nil
+}
+
+func (r *TransactionRepository) GetTotalTransaction(startDate, endDate string) (int, int, error) {
+	query := `SELECT COUNT(id), SUM(total_amount)
+		FROM transactions 
+		WHERE created_at::date BETWEEN $1 AND $2`
+
+	var totalTrans, totalRevenue int
+	err := r.db.QueryRow(query, startDate, endDate).
+		Scan(&totalTrans, &totalRevenue)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return 0, 0, nil
+		}
+		log.Printf("error get total transaction: %v", err)
+		return 0, 0, err
+	}
+
+	return totalTrans, totalRevenue, nil
+}
+
+func (r *TransactionRepository) GetProductTerlaris(startDate, endDate string) (*model.ProdukTerlaris, error) {
+	query := `SELECT p.name, SUM(td.quantity) as qty_terjual
+			FROM transaction_details td
+			JOIN transactions t ON td.transaction_id = t.id
+			JOIN products p ON td.product_id = p.id
+			WHERE t.created_at::date BETWEEN $1 AND $2
+			GROUP BY td.product_id, p.name
+			ORDER BY qty_terjual DESC
+			LIMIT 1`
+
+	productTerlaris := &model.ProdukTerlaris{}
+	err := r.db.QueryRow(query, startDate, endDate).
+		Scan(&productTerlaris.Nama, &productTerlaris.QtyTerjual)
+	if err != nil {
+		log.Printf("error get product terlaris: %v", err)
+		return nil, err
+	}
+
+	return productTerlaris, nil
 }
