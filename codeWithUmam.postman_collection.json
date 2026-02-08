@@ -227,6 +227,85 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "transaction",
+      "item": [
+        {
+          "name": "Checkout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"product_id\": 10,\n            \"quantity\": 2\n        },\n        {\n            \"product_id\": 2,\n            \"quantity\": 1\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/checkout",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Report Today",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/report/hari-ini",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "report",
+                "hari-ini"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/report?start_date=2026-02-08&end_date=2026-02-08",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "report"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2026-02-08"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2026-02-08"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [
@@ -256,11 +335,11 @@
   "variable": [
     {
       "key": "host",
-      "value": "https://kasir-api-production.up.railway.app"
+      "value": "https://crud-categories-production.up.railway.app"
     },
     {
       "key": "host_local",
-      "value": ""
+      "value": "http://localhost:8181"
     }
   ]
 }
