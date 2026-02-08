@@ -5,37 +5,111 @@ This project is a simple CRUD application for managing Categories and Products.
 ## Base URLs
 
 - **Local Development**: `http://localhost:8181`
-- **Production**: `https://kasir-api-production.up.railway.app`
+- **Production**: `https://crud-categories-production.up.railway.app`
 
 ## Endpoints
 
 ### Categories
 
-| Method | Endpoint | Description | Request Body |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/categories` | Get all categories | - |
-| `GET` | `/categories/:id` | Get a single category by ID | - |
-| `POST` | `/categories` | Create a new category | `{"name": "string", "description": "string"}` |
-| `PUT` | `/categories/:id` | Update a category | `{"name": "string", "description": "string"}` |
-| `DELETE` | `/categories/:id` | Delete a category | - |
+#### `GET` /categories
+Get all categories.
+
+#### `GET` /categories/:id
+Get a single category by ID.
+
+#### `POST` /categories
+Create a new category.
+
+**Request Body:**
+
+```json
+{
+  "name": "string",
+  "description": "string"
+}
+```
+
+#### `PUT` /categories/:id
+Update a category.
+
+**Request Body:**
+
+```json
+{
+  "name": "string",
+  "description": "string"
+}
+```
+
+#### `DELETE` /categories/:id
+Delete a category.
 
 ### Products
 
-| Method | Endpoint | Description | Request Body |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/products` | Get all products | - |
-| `GET` | `/products/:id` | Get a single product by ID | - |
-| `POST` | `/products` | Create a new product | `{"name": "string", "stock": int, "price": int, "category_id": int}` |
-| `PUT` | `/products/:id` | Update a product | `{"name": "string", "stock": int, "price": int, "category_id": int}` |
-| `DELETE` | `/products/:id` | Delete a product | - |
+#### `GET` /products
+Get all products.
+
+#### `GET` /products/:id
+Get a single product by ID.
+
+#### `POST` /products
+Create a new product.
+
+**Request Body:**
+
+```json
+{
+  "name": "string",
+  "stock": int,
+  "price": int,
+  "category_id": int
+}
+```
+
+#### `PUT` /products/:id
+Update a product.
+
+**Request Body:**
+
+```json
+{
+  "name": "string",
+  "stock": int,
+  "price": int,
+  "category_id": int
+}
+```
+
+#### `DELETE` /products/:id
+Delete a product.
 
 ### Transactions
 
-| Method | Endpoint | Description | Request Body | Query Params |
-| :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/checkout` | Create a new transaction | `{"items": [{"product_id": int, "quantity": int}]}` | - |
-| `GET` | `/api/report/hari-ini` | Get report for today | - | - |
-| `GET` | `/api/report` | Get report with date range | - | `start_date` (YYYY-MM-DD), `end_date` (YYYY-MM-DD) |
+#### `POST` /api/checkout
+Create a new transaction.
+
+**Request Body:**
+
+```json
+{
+  "items": [
+    {
+      "product_id": int,
+      "quantity": int
+    }
+  ]
+}
+```
+
+#### `GET` /api/report/hari-ini
+Get report for today.
+
+#### `GET` /api/report
+Get report with date range.
+
+**Query Params:**
+- `start_date` (YYYY-MM-DD)
+- `end_date` (YYYY-MM-DD)
 
 ## Postman Collection
 
